@@ -20,9 +20,7 @@ const userRouter = require('./models/User/userRouter');
 app.use(cors());
 app.use(express.json());
 
-
 app.use('/', homeRouter);
-
 
 app.use('/user', userRouter);
 app.use('/admin', adminRouter);
@@ -42,23 +40,22 @@ app.use('/admin', adminRouter);
 app.use('/categories', categoryRouter);
 
 app.use((error, req, res, next) => {
-  
   if (!error.code) {
-    console.log("enteredssss"+error.code)
+    console.log('enteredssss' + error.code);
     res.statusCode = 500;
     res.send({ message: 'something went wrong mina' });
     return next();
   }
   console.log(error.message);
   res.statusCode = error.status;
-  res.send({ message: error.code});
+  res.send({ message: error.code });
   return next();
-}); 
+});
 
 app.use(errorHandling_middleware);
 
 // app.use(errorHandling_middleware);
 
-app.listen(port, () => {
+app.listen(process.env.PORT, () => {
   console.log(`Server at http://localhost:${port}`);
 });
